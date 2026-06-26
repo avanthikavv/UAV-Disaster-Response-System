@@ -1,74 +1,82 @@
 # Mission Utility Based Dynamic Multi-UAV Disaster Response System
-## MATLAB Implementation
 
----
+## Project Overview
 
-## FILES
+This project simulates a fleet of UAVs (drones) performing disaster response operations in dynamic environments.
 
-| File | Phase | Purpose |
-|------|-------|---------|
-| `main_simulation.m` | Entry | Master script – run this |
-| `create_environment.m` | 1 | Generate 2D disaster grid |
-| `compute_priority_map.m` | 2 | Priority scores per cell |
-| `deploy_uavs.m` | 3 | Initialise UAV structs |
-| `find_top_k_regions.m` | 4 | Spatially diverse top-K targets |
-| `assign_uavs.m` | 5/6/11 | Density + sensor-aware assignment |
-| `move_uavs.m` | 6 | Move UAVs toward targets |
-| `update_environment.m` | 7 | Fire/flood spread, new survivors |
-| `compute_mission_utility.m` | 9 | MU = 0.4*Surv + 0.3*Sev + 0.2*Access + 0.1*Urgency |
-| `update_energy.m` | 10 | Battery drain + RTB recharge |
-| `client_selection.m` | 13 | FL client selection scoring |
-| `federated_learning.m` | 12 | Async FedAvg aggregation |
-| `visualize_simulation.m` | 14 | 6-panel live visualisation |
+The system integrates:
 
----
+* Mission Utility Based UAV Selection
+* Dynamic Priority Mapping
+* Federated Learning Framework
+* Energy-Aware UAV Scheduling
+* Return-To-Base (RTB) and Charging Logic
+* Survivor Detection
+* Multi-Disaster Monitoring
 
-## HOW TO RUN
+## Disaster Classes
 
-1. Open MATLAB (R2020b or newer recommended).
-2. Set your working directory to this folder:
-   ```
-   cd('path/to/UAV_Disaster_Sim')
-   ```
-3. Run:
-   ```matlab
-   main_simulation
-   ```
+The CNN model is designed to classify:
 
----
+1. Fire
+2. Flood
+3. Landslide
+4. Building Damage
+5. Smoke
+6. Normal Environment
 
-## KEY CONFIGURATION (in main_simulation.m)
+## CNN Model
 
-| Parameter | Default | Description |
-|-----------|---------|-------------|
-| `cfg.gridSize` | 50 | Grid dimension (NxN) |
-| `cfg.numRGB` | 5 | Number of RGB UAVs |
-| `cfg.numThermal` | 5 | Number of Thermal UAVs |
-| `cfg.numCycles` | 80 | Total simulation cycles |
-| `cfg.topK` | 6 | Top-K priority regions |
-| `cfg.maxDensity` | 3/2/1 | Max UAVs per high/mid/low region |
-| `cfg.flThreshold` | 10 | FL round every N cycles |
-| `cfg.animPause` | 0.15 | Seconds between frames |
+Architecture:
 
----
+* ResNet18 (Transfer Learning)
 
-## VISUALIZATION PANELS
+Framework:
 
-1. **Disaster Environment** – colour-coded grid (fire/flood/landslide/survivor…)
-2. **Priority Map** – 0-100 heat map
-3. **Mission Utility Map** – composite scoring heat map
-4. **UAV Assignments** – UAV positions + target lines on utility background
-5. **UAV Energy Levels** – bar chart; red dashed line = critical (20%)
-6. **Federated Learning** – aggregated model norm over FL rounds
+* MATLAB Deep Learning Toolbox
 
----
+## Dataset
 
-## NOVELTIES IMPLEMENTED
+Dataset collected from Kaggle and public disaster image repositories.
 
-- Dynamic disaster spread (fire, flood, landslide)
-- Density-capped UAV allocation (no overcrowding)
-- Sensor-aware assignment (RGB → damage; Thermal → survivors)
-- Mission Utility Score (4-factor weighted formula)
-- Energy-aware scheduling + RTB recharge
-- Asynchronous Federated Learning with FedAvg
-- Mission-utility + energy + data-quality client selection
+Classes include:
+
+* Fire
+* Flood
+* Landslide
+* Building Damage
+* Smoke
+* Normal
+
+## Training Procedure
+
+* Dataset split: 70% Training
+* Dataset split: 30% Testing
+
+Training performed using MATLAB Deep Learning Toolbox and ResNet18 transfer learning.
+
+## Future Integration
+
+CNN predictions will be integrated into:
+
+* Mission Utility Score computation
+* Priority Map generation
+* UAV task assignment
+* Federated Learning participation
+
+## Current Status
+
+Completed:
+
+* UAV Simulation
+* Federated Learning Framework
+* Energy Management
+* Survivor Detection
+* Dynamic Priority Mapping
+* Visualization Dashboard
+
+In Progress:
+
+* CNN Training
+* Real Drone Footage Integration
+* UAV Path Planning with Obstacle Avoidance
